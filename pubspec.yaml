@@ -1,8 +1,8 @@
 name: tibetan_calendar
 description: Tibetan Calendar 
 version: 0.0.1
-author:
-homepage:
+author: Kunchok Tashi<developer.khatag@gmail.com>
+homepage: https://github.com/CodingWithTashi/tibetan_calendar.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

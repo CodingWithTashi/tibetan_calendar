@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [0.0.1] - 2021-05-30
 
-* TODO: Describe initial release.
+* Tibetan Calendar package can be used to convert normal date to tibetan calendar
