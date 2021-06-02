@@ -38,7 +38,9 @@ class _HomePageState extends State<HomePage> {
               ElevatedButton(
                 child: Text('Get Today Date'),
                 onPressed: () {
-                  tibDate = TibetanCalendar.getTibetanDate(DateTime.now());
+                  var now = DateTime.now();
+                  tibDate = TibetanCalendar.getTibetanDate(
+                      DateTime(now.year, now.month, now.day));
                   setState(() {});
                 },
               ),
@@ -46,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
               tibDate != null
-                  ? Text('${tibDate.day + 1}/${tibDate.month}/${tibDate.year}')
+                  ? Text('${tibDate.day}/${tibDate.month}/${tibDate.year}')
                   : Text('Click button')
             ],
           ),

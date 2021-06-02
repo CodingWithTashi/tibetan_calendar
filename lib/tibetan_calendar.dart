@@ -1,5 +1,7 @@
 library tibetan_calendar;
 
+import 'package:intl/intl.dart';
+
 const RABJUNG_BEGINNING = 1027;
 // length of rabjung cycle in years
 const RABJUNG_CYCLE_LENGTH = 60;
@@ -148,9 +150,12 @@ class TibetanCalendar {
     print(jd);
   }
 
-  static julianFromUnix(DateTime unixTime) {
-    var b = ((unixTime.millisecondsSinceEpoch / 86400000) + 2440587.5).floor();
-    return b;
+  static julianFromUnix(DateTime unixDate) {
+    var date = '${unixDate.year}/${unixDate.month}/${unixDate.day}';
+    var dartDate = DateFormat("yyyy/MM/dd HH:mm:ss").parse('$date 18:00:00');
+    var unixTime =
+        ((dartDate.millisecondsSinceEpoch / 86400000) + 2440587.5).floor();
+    return unixTime;
   }
 
   static monthCountFromTibetan(Map<String, Object> _a) {
