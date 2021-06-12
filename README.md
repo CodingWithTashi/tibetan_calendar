@@ -4,11 +4,30 @@ Tibetan Calendar
 
 ## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Lunar calendar library for Dart Native.
+Computing lunar calendar by timezone.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+| ![Image](https://github.com/CodingWithTashi/tibetan_calendar/blob/master/calendar.PNG?raw=true) | ![Image](https://github.com/CodingWithTashi/tibetan_calendar/blob/master/calendar.PNG?raw=true) |
+| :------------: | :------------: |
+| **Tibetan Calendar** | **Western Calendar** |
+
+## Using
+
+Import the library:
+```dart
+import 'package:tibetan_calendar/tibetan_calendar.dart';
+
+```
+
+<br>
+Convert calendar from from western calendar to tibetan calendar.
+<br>
+For example:
+
+```dart
+var now = DateTime.now();
+tibDate = TibetanCalendar.getTibetanDate(DateTime(now.year, now.month, now.day));
+print(tibDate.year);  // 2148
+print(tibDate.month); // 4
+print(tibDate.day);   // 25
+```
