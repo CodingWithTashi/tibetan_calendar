@@ -71,12 +71,13 @@ class Calendar {
 class TibetanCalendar {
   static DateTime westernDate = DateTime.now();
 
-  /// Returns [value] plus 1.
+  //GET TIBETAN DATE FROM DART DATE
   static Calendar getTibetanDate(DateTime arg) {
     westernDate = arg;
     return getDayFromWestern(westernDate);
   }
 
+  //GET DAY FROM WESTERN
   static Calendar getDayFromWestern(DateTime date) {
     // const date = new Date(wYear, wMonth - 1, wDay);
     var wYear = date.year;
@@ -150,6 +151,7 @@ class TibetanCalendar {
     print(jd);
   }
 
+  //get julian from the dart date
   static julianFromUnix(DateTime unixDate) {
     var date = '${unixDate.year}/${unixDate.month}/${unixDate.day}';
     var dartDate = DateFormat("yyyy/MM/dd HH:mm:ss").parse('$date 18:00:00');
@@ -158,6 +160,7 @@ class TibetanCalendar {
     return unixTime;
   }
 
+  //COUNT MONTH FROM TIBETAN DATE
   static monthCountFromTibetan(Map<String, Object> _a) {
     int year = _a['year'];
     int month = _a['month'];
@@ -171,11 +174,13 @@ class TibetanCalendar {
     // return Math.floor((12 * (year - Y0) + monthObject.month - ALPHA - (1 - 12 * S1) * isLeap) / (12 * S1));
   }
 
+  // CHECK IF IT IS DOUBLE MONTH OR NOT
   static isDoubledMonth(int tYear, int month) {
     var mp = 12 * (tYear - YEAR_DIFF - YEAR0) + month;
     return (2 * mp) % 65 == BETA % 65 || (2 * mp) % 65 == (BETA + 1) % 65;
   }
 
+  //GET JULIAN DATR FROM DAYCOUNT
   static julianFromTrueDate(num dayCount) {
     var monthCount = ((dayCount - 1) / 30).floor();
     //todo
@@ -183,24 +188,29 @@ class TibetanCalendar {
     return (trueDateFromMonthCountDay(calculatedDay, monthCount)).floor();
   }
 
+  //GET DATE FROM MONTH COUNT
   static trueDateFromMonthCountDay(num day, int monthCount) {
     return (meanDate(day, monthCount) +
         moonEqu(day, monthCount) / 60 -
         sunEqu(day, monthCount) / 60);
   }
 
+  //GET MEAN DATE
   static meanDate(num day, int monthCount) {
     return monthCount * M1 + day * M2 + M0;
   }
 
+  //GET MOON EQUA
   static moonEqu(num day, int monthCount) {
     return moonTab(28 * moonAnomaly(day, monthCount));
   }
 
+  //GET SUN EQUA
   static sunEqu(num day, int monthCount) {
     return sunTab(12 * sunAnomaly(day, monthCount));
   }
 
+  //GET MOON TAB
   static moonTab(num i) {
     var a = moonTabInt(i.floor());
     var x = frac(i);
@@ -212,6 +222,7 @@ class TibetanCalendar {
     return a;
   }
 
+  //MOON TAB INT
   static moonTabInt(int i) {
     var iMod = i % 28;
     if (iMod <= 7) {
@@ -226,14 +237,17 @@ class TibetanCalendar {
     return -MOON_TAB[28 - iMod];
   }
 
+  //MOON ANOMAY
   static num moonAnomaly(num day, int monthCount) {
     return monthCount * A1 + day * A2 + A0;
   }
 
+  //SUN ANOMAY
   static num sunAnomaly(num day, int monthCount) {
     return meanSun(day, monthCount) - 1 / 4;
   }
 
+  //MEAN SUN
   static meanSun(num day, int monthCount) {
     return monthCount * S1 + day * S2 + S0;
   }
@@ -267,6 +281,7 @@ class TibetanCalendar {
     return a % 1;
   }
 
+  //GET MONT FROM MONTH COUNT
   static getMonthFromMonthCount(monthCount) {
     var x = ((65 * monthCount + BETA) / 67).ceil();
     var tMonth = amod(x, 12);
@@ -279,6 +294,7 @@ class TibetanCalendar {
     return (a % b) == 0 ? b : (a % b);
   }
 
+  //GET DAY FROM TIBETAN
   static Calendar getDayFromTibetan(Map<String, dynamic> _a) {
     var year = _a['year'],
         month = _a['month'],
@@ -338,6 +354,7 @@ class TibetanCalendar {
     };*/
   }
 
+  //GET JULIAN FROM TIBETAN
   static julianFromTibetan(year, month, isLeapMonth, day) {
     var monthCount = monthCountFromTibetan({
       'year': year,
@@ -347,12 +364,14 @@ class TibetanCalendar {
     return (trueDateFromMonthCountDay(day, monthCount)).floor();
   }
 
+  //GET DAY BEFORE
   static getDayBefore(day, monthCount) {
     return day == 1
         ? {'day': 30, 'monthCount': monthCount - 1}
         : {'day': day - 1, 'monthCount': monthCount};
   }
 
+//GET UNIX DATE FROM JULIAN
   static unixFromJulian(julianDate) {
     var localTimezoneOffset = julianDate.timeZoneOffset.inMilliseconds;
     var unixDate =

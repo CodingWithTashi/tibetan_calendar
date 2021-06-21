@@ -1,6 +1,6 @@
 name: tibetan_calendar
-description: Tibetan Calendar 
-version: 0.0.2
+description: Tibetan Calender package provide easy way to get tibetan date and year base on western date. For more you can refer documentaion
+version: 0.0.3
 author: Kunchok Tashi<developer.kharag@gmail.com>
 homepage: https://github.com/CodingWithTashi/tibetan_calendar.git
 
