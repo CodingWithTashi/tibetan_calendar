@@ -1,11 +1,11 @@
 name: tibetan_calendar
 description: Tibetan Calender package provide easy way to get tibetan date and year base on western date. For more you can refer documentaion
-version: 0.0.3
+version: 0.0.4
 author: Kunchok Tashi<developer.kharag@gmail.com>
 homepage: https://github.com/CodingWithTashi/tibetan_calendar.git
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:

@@ -3,43 +3,55 @@ library tibetan_calendar;
 import 'package:intl/intl.dart';
 
 const RABJUNG_BEGINNING = 1027;
-// length of rabjung cycle in years
+
+/// length of rabjung cycle in years
 const RABJUNG_CYCLE_LENGTH = 60;
-// difference between Western and Tibetan year count
+
+/// difference between Western and Tibetan year count
 const YEAR_DIFF = 127;
-// difference between Unix and Julian date starts
+
+/// difference between Unix and Julian date starts
 const JULIAN_TO_UNIX = 2440587.5;
-// number of milliseconds in a year
+
+/// number of milliseconds in a year
 const MS_IN_YEAR = 86400000;
-// number of minutes in day
+
+/// number of minutes in day
 const MIN_IN_DAY = 1440;
-// calendrical constants: month calculations
-// beginning of epoch based on Kalachakra. Used as 0 for month counts since this time
+
+/// calendrical constants: month calculations
+/// beginning of epoch based on Kalachakra. Used as 0 for month counts since this time
 const YEAR0 = 806;
 const MONTH0 = 3;
-// constants given in Svante's article
+
+/// constants given in Svante's article
 const BETA_STAR = 61;
 const BETA = 123;
-// const P1 = 77 / 90;
-// const P0 = 139 / 180;
-// const ALPHA = 1 + 827 / 1005;
-// calendrical constants: day calculations
-// mean date
+
+/// const P1 = 77 / 90;
+/// const P0 = 139 / 180;
+/// const ALPHA = 1 + 827 / 1005;
+/// calendrical constants: day calculations
+/// mean date
 const M0 = 2015501 + 4783 / 5656;
 const M1 = 167025 / 5656;
 const M2 = M1 / 30;
-// mean sun
+
+/// mean sun
 const S0 = 743 / 804;
 const S1 = 65 / 804;
 const S2 = S1 / 30;
-// anomaly moon
+
+/// anomaly moon
 const A0 = 475 / 3528;
 const A1 = 253 / 3528;
 const A2 = 1 / 28;
-// fixed tables
+
+/// fixed tables
 const MOON_TAB = [0, 5, 10, 15, 19, 22, 24, 25];
 const SUN_TAB = [0, 6, 10, 11];
-// year elements & animals
+
+/// year elements & animals
 const YEAR_ELEMENTS = ['Wood', 'Fire', 'Earth', 'Iron', 'Water'];
 const YEAR_ANIMALS = [
   'Mouse',
@@ -71,13 +83,13 @@ class Calendar {
 class TibetanCalendar {
   static DateTime westernDate = DateTime.now();
 
-  //GET TIBETAN DATE FROM DART DATE
+  ///GET TIBETAN DATE FROM DART DATE
   static Calendar getTibetanDate(DateTime arg) {
     westernDate = arg;
     return getDayFromWestern(westernDate);
   }
 
-  //GET DAY FROM WESTERN
+  ///GET DAY FROM WESTERN
   static Calendar getDayFromWestern(DateTime date) {
     // const date = new Date(wYear, wMonth - 1, wDay);
     var wYear = date.year;
@@ -115,11 +127,13 @@ class TibetanCalendar {
         jds[1] = njd;
       }
     }
-    // so we found it;
+
+    /// so we found it;
     var winnerJd;
     var winnerTrueDate;
-    // if the western date is the 1st of a doubled tib. day, then jd[0] == jd - 1 and
-    // jd[1] == jd + 1, and the corresponding tib. day number is the one from jd[1].
+
+    /// if the western date is the 1st of a doubled tib. day, then jd[0] == jd - 1 and
+    /// jd[1] == jd + 1, and the corresponding tib. day number is the one from jd[1].
     if (jds[0] == jd) {
       winnerJd = jds[0]; // eslint-disable-line prefer-destructuring
       winnerTrueDate = trueDate[0]; // eslint-disable-line prefer-destructuring
@@ -127,7 +141,8 @@ class TibetanCalendar {
       winnerJd = jds[1]; // eslint-disable-line prefer-destructuring
       winnerTrueDate = trueDate[1]; // eslint-disable-line prefer-destructuring
     }
-    // figure out the real tib. date: year, month, leap month, day number, leap day.
+
+    /// figure out the real tib. date: year, month, leap month, day number, leap day.
     var isLeapDay = winnerJd > jd;
     var monthCount = ((winnerTrueDate - 1) / 30).floor();
     var day;
@@ -151,7 +166,7 @@ class TibetanCalendar {
     print(jd);
   }
 
-  //get julian from the dart date
+  ///get julian from the dart date
   static julianFromUnix(DateTime unixDate) {
     var date = '${unixDate.year}/${unixDate.month}/${unixDate.day}';
     var dartDate = DateFormat("yyyy/MM/dd HH:mm:ss").parse('$date 18:00:00');
@@ -160,27 +175,29 @@ class TibetanCalendar {
     return unixTime;
   }
 
-  //COUNT MONTH FROM TIBETAN DATE
+  ///COUNT MONTH FROM TIBETAN DATE
   static monthCountFromTibetan(Map<String, Object> _a) {
-    int year = _a['year'];
-    int month = _a['month'];
-    bool isLeapMonth = _a['isLeapMonth'];
-    // the formulas on Svante's paper use western year numbers
+    int year = _a['year'] as int;
+    int month = _a['month'] as int;
+    bool isLeapMonth = _a['isLeapMonth'] as bool;
+
+    /// the formulas on Svante's paper use western year numbers
     var wYear = year - YEAR_DIFF;
     var solarMonth = 12 * (wYear - YEAR0) + month - MONTH0;
     var hasLeap = isDoubledMonth(year, month);
     var isLeap = hasLeap && isLeapMonth ? 1 : 0;
     return ((67 * solarMonth + BETA_STAR + 17) / 65).floor() - isLeap;
-    // return Math.floor((12 * (year - Y0) + monthObject.month - ALPHA - (1 - 12 * S1) * isLeap) / (12 * S1));
+
+    /// return Math.floor((12 * (year - Y0) + monthObject.month - ALPHA - (1 - 12 * S1) * isLeap) / (12 * S1));
   }
 
-  // CHECK IF IT IS DOUBLE MONTH OR NOT
+  /// CHECK IF IT IS DOUBLE MONTH OR NOT
   static isDoubledMonth(int tYear, int month) {
     var mp = 12 * (tYear - YEAR_DIFF - YEAR0) + month;
     return (2 * mp) % 65 == BETA % 65 || (2 * mp) % 65 == (BETA + 1) % 65;
   }
 
-  //GET JULIAN DATR FROM DAYCOUNT
+  ///GET JULIAN DATR FROM DAYCOUNT
   static julianFromTrueDate(num dayCount) {
     var monthCount = ((dayCount - 1) / 30).floor();
     //todo
@@ -188,29 +205,29 @@ class TibetanCalendar {
     return (trueDateFromMonthCountDay(calculatedDay, monthCount)).floor();
   }
 
-  //GET DATE FROM MONTH COUNT
+  ///GET DATE FROM MONTH COUNT
   static trueDateFromMonthCountDay(num day, int monthCount) {
     return (meanDate(day, monthCount) +
         moonEqu(day, monthCount) / 60 -
         sunEqu(day, monthCount) / 60);
   }
 
-  //GET MEAN DATE
+  ///GET MEAN DATE
   static meanDate(num day, int monthCount) {
     return monthCount * M1 + day * M2 + M0;
   }
 
-  //GET MOON EQUA
+  ///GET MOON EQUA
   static moonEqu(num day, int monthCount) {
     return moonTab(28 * moonAnomaly(day, monthCount));
   }
 
-  //GET SUN EQUA
+  ///GET SUN EQUA
   static sunEqu(num day, int monthCount) {
     return sunTab(12 * sunAnomaly(day, monthCount));
   }
 
-  //GET MOON TAB
+  ///GET MOON TAB
   static moonTab(num i) {
     var a = moonTabInt(i.floor());
     var x = frac(i);
@@ -222,7 +239,7 @@ class TibetanCalendar {
     return a;
   }
 
-  //MOON TAB INT
+  ///MOON TAB INT
   static moonTabInt(int i) {
     var iMod = i % 28;
     if (iMod <= 7) {
@@ -237,17 +254,17 @@ class TibetanCalendar {
     return -MOON_TAB[28 - iMod];
   }
 
-  //MOON ANOMAY
+  ///MOON ANOMAY
   static num moonAnomaly(num day, int monthCount) {
     return monthCount * A1 + day * A2 + A0;
   }
 
-  //SUN ANOMAY
+  ///SUN ANOMAY
   static num sunAnomaly(num day, int monthCount) {
     return meanSun(day, monthCount) - 1 / 4;
   }
 
-  //MEAN SUN
+  ///MEAN SUN
   static meanSun(num day, int monthCount) {
     return monthCount * S1 + day * S2 + S0;
   }
@@ -281,7 +298,7 @@ class TibetanCalendar {
     return a % 1;
   }
 
-  //GET MONT FROM MONTH COUNT
+  ///GET MONT FROM MONTH COUNT
   static getMonthFromMonthCount(monthCount) {
     var x = ((65 * monthCount + BETA) / 67).ceil();
     var tMonth = amod(x, 12);
@@ -294,7 +311,7 @@ class TibetanCalendar {
     return (a % b) == 0 ? b : (a % b);
   }
 
-  //GET DAY FROM TIBETAN
+  ///GET DAY FROM TIBETAN
   static Calendar getDayFromTibetan(Map<String, dynamic> _a) {
     var year = _a['year'],
         month = _a['month'],
@@ -306,7 +323,8 @@ class TibetanCalendar {
         //todo checek leap
         isLeapDay = _c == null ? false : _c;
     var julianDate = julianFromTibetan(year, month, isLeapMonth, day);
-    // also calculate the Julian date of the previous Tib. day
+
+    /// also calculate the Julian date of the previous Tib. day
     var monthCount = monthCountFromTibetan({
       'year': year,
       'month': month,
@@ -320,13 +338,15 @@ class TibetanCalendar {
     var julianDate2DaysBefore = (trueDateFromMonthCountDay(
             twoDaysBefore['day'], twoDaysBefore['monthCount']))
         .floor();
-    // figure out leap months, leap days & skipped days
+
+    /// figure out leap months, leap days & skipped days
     var isDoubledMonthThis = isDoubledMonth(year, month);
     var hasLeapDayThis = julianDate == julianDatePrevious + 2;
     var skippedDay = julianDate == julianDatePrevious;
     var isPreviousSkipped = julianDatePrevious == julianDate2DaysBefore;
     var isLeapDayChecked = isLeapDay && hasLeapDayThis;
-    // figure out western date info for the main or leap day
+
+    /// figure out western date info for the main or leap day
     if (isLeapDayChecked) {
       julianDate--;
     }
@@ -354,7 +374,7 @@ class TibetanCalendar {
     };*/
   }
 
-  //GET JULIAN FROM TIBETAN
+  ///GET JULIAN FROM TIBETAN
   static julianFromTibetan(year, month, isLeapMonth, day) {
     var monthCount = monthCountFromTibetan({
       'year': year,
@@ -364,14 +384,14 @@ class TibetanCalendar {
     return (trueDateFromMonthCountDay(day, monthCount)).floor();
   }
 
-  //GET DAY BEFORE
+  ///GET DAY BEFORE
   static getDayBefore(day, monthCount) {
     return day == 1
         ? {'day': 30, 'monthCount': monthCount - 1}
         : {'day': day - 1, 'monthCount': monthCount};
   }
 
-//GET UNIX DATE FROM JULIAN
+  ///GET UNIX DATE FROM JULIAN
   static unixFromJulian(julianDate) {
     var localTimezoneOffset = julianDate.timeZoneOffset.inMilliseconds;
     var unixDate =
