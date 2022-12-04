@@ -5,26 +5,19 @@ Tibetan Calendar
 ## Demo
 
 Lunar calendar library for Dart Native.
-Computing lunar calendar by timezone.
+Computing lunar calendar by timezone. Download app from [PlayStore](https://play.google.com/store/apps/details?id=com.codingwithtashi.tibetan_calender&hl=en_IN&gl=US).
 
 | ![Image](https://github.com/CodingWithTashi/tibetan_calendar/blob/master/calendar.PNG?raw=true) | ![Image](https://github.com/CodingWithTashi/tibetan_calendar/blob/master/calendar.PNG?raw=true) |
 | :------------: | :------------: |
 | **Tibetan Calendar** | **Western Calendar** |
 
-## Getting started
+## Add package
 
 ```dart
 tibetan_calendar: 0.0.5
 
 ```   
-Import the library:
-```dart
-import 'package:tibetan_calendar/tibetan_calendar.dart';
-
-```
-## Using
-
-Import the library:
+## Import the library:
 ```dart
 import 'package:tibetan_calendar/tibetan_calendar.dart';
 
