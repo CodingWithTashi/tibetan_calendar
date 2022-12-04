@@ -106,7 +106,7 @@ class TibetanCalendar {
       return monthCountFromTibetan(
           {'year': y, 'month': 1, 'isLeapMonth': true});
     });*/
-    //todo chect list or map
+    //todo check list or map
     var trueDate = [];
     monthCounts.forEach((element) {
       trueDate.add((1 + 30 * element));
@@ -163,7 +163,6 @@ class TibetanCalendar {
       'day': day,
       'isLeapDay': isLeapDay,
     });
-    print(jd);
   }
 
   ///get julian from the dart date
@@ -334,16 +333,16 @@ class TibetanCalendar {
     var julianDatePrevious =
         (trueDateFromMonthCountDay(dayBefore['day'], dayBefore['monthCount']))
             .floor();
-    var twoDaysBefore = getDayBefore(dayBefore['day'], dayBefore['monthCount']);
-    var julianDate2DaysBefore = (trueDateFromMonthCountDay(
-            twoDaysBefore['day'], twoDaysBefore['monthCount']))
-        .floor();
+    // var twoDaysBefore = getDayBefore(dayBefore['day'], dayBefore['monthCount']);
+    // var julianDate2DaysBefore = (trueDateFromMonthCountDay(
+    //         twoDaysBefore['day'], twoDaysBefore['monthCount']))
+    //     .floor();
 
     /// figure out leap months, leap days & skipped days
-    var isDoubledMonthThis = isDoubledMonth(year, month);
+    // var isDoubledMonthThis = isDoubledMonth(year, month);
     var hasLeapDayThis = julianDate == julianDatePrevious + 2;
-    var skippedDay = julianDate == julianDatePrevious;
-    var isPreviousSkipped = julianDatePrevious == julianDate2DaysBefore;
+    // var skippedDay = julianDate == julianDatePrevious;
+    // var isPreviousSkipped = julianDatePrevious == julianDate2DaysBefore;
     var isLeapDayChecked = isLeapDay && hasLeapDayThis;
 
     /// figure out western date info for the main or leap day

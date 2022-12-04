@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +27,6 @@ class _HomePageState extends State<HomePage> {
   Calendar? tibDate;
   @override
   Widget build(BuildContext context) {
-    //print(TibetanCalendar.getTibetanDate(DateTime.now()));
     return Scaffold(
       body: Container(
         child: Center(
