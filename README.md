@@ -14,7 +14,7 @@ Computing lunar calendar by timezone. Download app from [PlayStore](https://play
 ## Add package
 
 ```dart
-tibetan_calendar: 0.0.5
+tibetan_calendar: 0.0.6
 
 ```   
 ## Import the library:

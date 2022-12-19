@@ -14,3 +14,7 @@
 * Documentation
 * Version update
 
+## [0.0.6] - 2022-12-19
+* Remove flutter sdk from package
+* updated test cases with dart
+
