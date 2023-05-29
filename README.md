@@ -2,6 +2,14 @@
 
 Tibetan Calendar 
 
+# Credit and resources
+This packages is inspired and taken help from below resources.
+* https://gitlab.com/TibetanCalendar/TibetanDateCalcualtor
+* https://kunpen.ngalso.org/en/tibetan-calendar/tibetan-astrology-calendar-introduction/
+* http://www.tactus.dk/tacom/calendar5.htm
+
+Tibetan Calendar
+
 ## Demo
 
 Lunar calendar library for Dart Native.
@@ -14,7 +22,7 @@ Computing lunar calendar by timezone. Download app from [PlayStore](https://play
 ## Add package
 
 ```dart
-tibetan_calendar: 0.0.6
+tibetan_calendar: 1.0.0
 
 ```   
 ## Import the library:
@@ -34,6 +42,9 @@ tibDate = TibetanCalendar.getTibetanDate(DateTime(now.year, now.month, now.day))
 print(tibDate.year);  // 2148
 print(tibDate.month); // 4
 print(tibDate.day);   // 25
+yearAttribute = TibetanCalendar.getYearAttributes(tibetanYear:tibDate.year);
+print(yearAttribute.animal); // Ox
+print(yearAttribute.element); // Iron
 ```   
 
 If you have any questions, feedback or ideas, feel free to [create an

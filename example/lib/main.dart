@@ -25,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TibetanCalendar? tibDate;
+  late YearAttribute yearAttribute;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +40,9 @@ class _HomePageState extends State<HomePage> {
                   var now = DateTime.now();
                   tibDate = TibetanCalendar.getTibetanDate(
                       DateTime(now.year, now.month, now.day));
+                  yearAttribute = TibetanCalendar.getYearAttributes(
+                    tibetanYear: tibDate!.year,
+                  );
                   setState(() {});
                 },
               ),
@@ -46,7 +50,16 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
               tibDate != null
-                  ? Text('${tibDate!.day}/${tibDate!.month}/${tibDate!.year}'+' ')
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                            '${tibDate!.day}/${tibDate!.month}/${tibDate!.year}' +
+                                ' '),
+                        Text('Animal: ${yearAttribute.animal}'),
+                        Text('Element: ${yearAttribute.element}'),
+                      ],
+                    )
                   : Text('Click button')
             ],
           ),

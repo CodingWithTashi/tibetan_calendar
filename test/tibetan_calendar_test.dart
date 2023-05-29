@@ -20,4 +20,20 @@ void main() {
     expect(tibetanDate.month, 8);
     expect(tibetanDate.year, 2147);
   });
+
+  test('Check Tibetan year attribute are correct or not (2150-2023)', () {
+    final yearAttribute = TibetanCalendar.getYearAttributes(tibetanYear: 2150);
+    expect(yearAttribute.animal, 'Rabbit');
+    expect(yearAttribute.element, 'Water');
+  });
+  test('Check Tibetan year attribute are correct or not (2151-2024)', () {
+    final yearAttribute = TibetanCalendar.getYearAttributes(tibetanYear: 2151);
+    expect(yearAttribute.animal, 'Dragon');
+    expect(yearAttribute.element, 'Wood');
+  });
+  test('Check Tibetan year attribute are correct or not (2152-2025)', () {
+    final yearAttribute = TibetanCalendar.getYearAttributes(tibetanYear: 2152);
+    expect(yearAttribute.animal, 'Snake');
+    expect(yearAttribute.element, 'Wood');
+  });
 }

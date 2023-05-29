@@ -1,6 +1,12 @@
 library tibetan_calendar;
 
 import 'package:intl/intl.dart';
+import 'package:tibetan_calendar/model.dart';
+export 'package:tibetan_calendar/model.dart';
+
+/// http://www.tactus.dk/tacom/calendar5.htm
+/// https://kunpen.ngalso.org/en/tibetan-calendar/tibetan-astrology-calendar-introduction/
+/// https://gitlab.com/TibetanCalendar/TibetanDateCalcualtor
 
 const RABJUNG_BEGINNING = 1027;
 
@@ -77,7 +83,12 @@ class TibetanCalendar {
   final int day;
   final bool isLeapMonth;
   final bool isLeapDay;
-  TibetanCalendar({required this.year, required this.month, required this.day, required this.isLeapDay, required this.isLeapMonth});
+  TibetanCalendar(
+      {required this.year,
+      required this.month,
+      required this.day,
+      required this.isLeapDay,
+      required this.isLeapMonth});
 
   static DateTime westernDate = DateTime.now();
 
@@ -396,5 +407,21 @@ class TibetanCalendar {
             MS_IN_YEAR;
     var unix = new DateTime.fromMicrosecondsSinceEpoch(unixDate);
     return unix;
+  }
+
+  static YearAttribute getYearAttributes({required int tibetanYear}) {
+    String animal = YEAR_ANIMALS[(tibetanYear + 1) % 12];
+    String element = YEAR_ELEMENTS[(tibetanYear - 1) ~/ 2 % 5];
+    String gender = YEAR_GENDER[(tibetanYear + 1) % 2];
+    return YearAttribute(animal: animal, element: element, gender: gender);
+  }
+
+  static YearAttribute getAnimalAndElementByYear(
+      {required int tibetanYear, required int westernBirthYear}) {
+    // subtract western current year to year of birth
+    int yearOffset = (DateTime.now().year - westernBirthYear);
+    // get tibetan birth year by subtracting current tibetan year and yearOffset
+    int birthTibetanYear = (tibetanYear - yearOffset);
+    return getYearAttributes(tibetanYear: birthTibetanYear);
   }
 }
