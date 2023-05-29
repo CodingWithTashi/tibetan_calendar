@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Calendar? tibDate;
+  TibetanCalendar? tibDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
               tibDate != null
-                  ? Text('${tibDate!.day}/${tibDate!.month}/${tibDate!.year}')
+                  ? Text('${tibDate!.day}/${tibDate!.month}/${tibDate!.year}'+' ')
                   : Text('Click button')
             ],
           ),

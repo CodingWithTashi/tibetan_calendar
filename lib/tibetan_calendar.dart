@@ -71,26 +71,24 @@ const YEAR_GENDER = ['Male', 'Female'];
 
 /// A Calculator.
 ///
-class Calendar {
-  final year;
-  final month;
-  final day;
-  final isLeapMonth;
-  final isLeapDay;
-  Calendar({this.year, this.month, this.day, this.isLeapDay, this.isLeapMonth});
-}
-
 class TibetanCalendar {
+  final int year;
+  final int month;
+  final int day;
+  final bool isLeapMonth;
+  final bool isLeapDay;
+  TibetanCalendar({required this.year, required this.month, required this.day, required this.isLeapDay, required this.isLeapMonth});
+
   static DateTime westernDate = DateTime.now();
 
   ///GET TIBETAN DATE FROM DART DATE
-  static Calendar getTibetanDate(DateTime arg) {
+  static TibetanCalendar getTibetanDate(DateTime arg) {
     westernDate = arg;
     return getDayFromWestern(westernDate);
   }
 
   ///GET DAY FROM WESTERN
-  static Calendar getDayFromWestern(DateTime date) {
+  static TibetanCalendar getDayFromWestern(DateTime date) {
     // const date = new Date(wYear, wMonth - 1, wDay);
     var wYear = date.year;
     var jd = julianFromUnix(date);
@@ -311,7 +309,7 @@ class TibetanCalendar {
   }
 
   ///GET DAY FROM TIBETAN
-  static Calendar getDayFromTibetan(Map<String, dynamic> _a) {
+  static TibetanCalendar getDayFromTibetan(Map<String, dynamic> _a) {
     var year = _a['year'],
         month = _a['month'],
         _b = _a['isLeapMonth'],
@@ -351,7 +349,7 @@ class TibetanCalendar {
     }
     //get nixdate from julian
     //var westernDate = unixFromJulian(julianDate);
-    return Calendar(
+    return TibetanCalendar(
         year: year,
         month: month,
         day: day,
