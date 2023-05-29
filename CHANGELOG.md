@@ -25,3 +25,5 @@
 * Updated documentation
 * Added test cases
 
+## [1.0.1]
+* Downgrade intl version because of incompatible with flutter_localizations
