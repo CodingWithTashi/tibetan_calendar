@@ -1,11 +1,11 @@
 name: tibetan_calendar
 description: Tibetan Calender package provide easy way to get tibetan date and year base on western date. For more you can refer documentaion
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/CodingWithTashi/tibetan_calendar.git
 issue_tracker: https://github.com/CodingWithTashi/tibetan_calendar/issues
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.18.0 <4.0.0"
 
 dependencies:
   intl: ^0.18.0

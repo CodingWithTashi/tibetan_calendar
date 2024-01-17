@@ -27,3 +27,6 @@
 
 ## [1.0.1]
 * Downgrade intl version because of incompatible with flutter_localizations
+
+## [1.0.2]
+* Updated Calendar to TibetanCalendar class
