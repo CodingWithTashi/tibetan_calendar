@@ -138,8 +138,8 @@ class TibetanCalendar {
     }
 
     /// so we found it;
-    var winnerJd;
-    var winnerTrueDate;
+    num winnerJd;
+    num winnerTrueDate;
 
     /// if the western date is the 1st of a doubled tib. day, then jd[0] == jd - 1 and
     /// jd[1] == jd + 1, and the corresponding tib. day number is the one from jd[1].

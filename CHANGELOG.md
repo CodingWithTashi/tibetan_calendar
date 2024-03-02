@@ -30,3 +30,6 @@
 
 ## [1.0.2]
 * Updated Calendar to TibetanCalendar class
+## [1.1.0]
+* Updated intl packages
+* Fix lints
