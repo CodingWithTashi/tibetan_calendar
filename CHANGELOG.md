@@ -33,3 +33,7 @@
 ## [1.1.0]
 * Updated intl packages
 * Fix lints
+
+
+## [1.1.1]
+* Updated intl packages
