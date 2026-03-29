@@ -49,19 +49,30 @@ int julianFromTibetan(int year, int month, bool isLeapMonth, int day) {
 /// Fixed bug: now correctly handles timezone normalization
 /// See explanation: https://stackoverflow.com/questions/11759992/calculating-jdayjulian-day-in-javascript
 int julianFromUnix(DateTime unixTime) {
-  final dateOnly = getDateStr(unixTime);
-  // Parse at 18:00:00 (noon UTC in Tibetan calendar calculation)
-  final parts = dateOnly.split('-');
-  final timeAfterNoon = DateTime(
-    int.parse(parts[0]),
-    int.parse(parts[1]),
-    int.parse(parts[2]),
-    18,
-  );
+  // Get the LOCAL date components, matching TypeScript's getDateStr behavior
+  // In TypeScript: date.getFullYear(), date.getMonth(), date.getDate() all return local values
+  // In Dart, we need to convert to local time first if the input is UTC
+  final localTime = unixTime.isUtc
+      ? DateTime.fromMillisecondsSinceEpoch(unixTime.millisecondsSinceEpoch, isUtc: false)
+      : unixTime;
 
-  final localTimezoneOffset = DateTime.now().timeZoneOffset.inMinutes;
+  final year = localTime.year;
+  final month = localTime.month;
+  final day = localTime.day;
+
+  // Create a DateTime at 18:00 LOCAL time (not UTC)
+  // This matches: new Date(`${dateOnly}T18:00:00`) which creates local time at 18:00
+  final timeAfterNoon = DateTime(year, month, day, 18);
+
+  // Get timezone offset in minutes
+  // NOTE: Dart's timeZoneOffset.inMinutes has OPPOSITE sign to JavaScript's getTimezoneOffset()
+  // JavaScript getTimezoneOffset(): positive for zones behind UTC (e.g., EDT = 240)
+  // Dart timeZoneOffset.inMinutes: negative for zones behind UTC (e.g., EDT = -240)
+  // So we negate to match JavaScript behavior
+  final timezoneOffset = -localTime.timeZoneOffset.inMinutes;
+
   return ((timeAfterNoon.millisecondsSinceEpoch / msInYear) -
-          (localTimezoneOffset / minInDay) +
+          (timezoneOffset / minInDay) +
           julianToUnix)
       .floor();
 }
